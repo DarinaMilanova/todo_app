@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'tasks/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-4">Dashboard</h2>
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card text-center shadow-sm border-primary">
+      <div class="card-body">
+        <h5 class="card-title">Total Tasks</h5>
+        <h2 class="fw-bold">{{ stats.total }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card text-center shadow-sm border-success">
+      <div class="card-body">
+        <h5 class="card-title">Completed</h5>
+        <h2 class="fw-bold text-success">{{ stats.completed }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card text-center shadow-sm border-warning">
+      <div class="card-body">
+        <h5 class="card-title">Pending</h5>
+        <h2 class="fw-bold text-warning">{{ stats.pending }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card text-center shadow-sm border-danger">
+      <div class="card-body">
+        <h5 class="card-title">Overdue</h5>
+        <h2 class="fw-bold text-danger">{{ stats.overdue }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card text-center shadow-sm border-info">
+      <div class="card-body">
+        <h5 class="card-title">Due Today</h5>
+        <h2 class="fw-bold text-info">{{ stats.due_today }}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

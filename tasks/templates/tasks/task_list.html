@@ -1,22 +1,72 @@
 {% extends 'tasks/base.html' %}
+{% load static %}
+
+{% block title %}My Tasks{% endblock %}
+
 {% block content %}
-<h1 class="mb-4">My Tasks</h1>
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Your Tasks</h2>
+    <div class="d-flex gap-2">
+        <form class="d-flex" method="get">
+            <input class="form-control form-control-sm" type="text" name="q" placeholder="Search..." value="{{ request.GET.q }}">
+            <button class="btn btn-outline-primary btn-sm ms-2" type="submit">Search</button>
+        </form>
+        <a href="{% url 'create_task' %}" class="btn btn-primary btn-sm">
+            <i class="bi bi-plus-lg"></i> Add Task
+        </a>
+    </div>
+</div>
 
 {% if tasks %}
-    <ul class="list-group">
-        {% for task in tasks %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ task.title }}
-                <div>
-                    <a href="{% url 'update_task' task.id %}" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger">Delete</a>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No tasks found.</p>
-{% endif %}
+  <div class="row g-3">
+    {% for task in tasks %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100
+          {% if task.completed %}border-success{% elif task.due_date and task.due_date < today %}border-danger
+          {% elif task.due_date and task.due_date <= today_plus_2 %}border-warning{% else %}border-light{% endif %}
+        ">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">
+              {{ task.title }}
+              {% if task.completed %}
+                <span class="badge bg-success">Completed</span>
+              {% elif task.due_date and task.due_date < today %}
+                <span class="badge bg-danger">Overdue</span>
+              {% elif task.due_date and task.due_date <= today_plus_2 %}
+                <span class="badge bg-warning text-dark">Due Soon</span>
+              {% endif %}
+            </h5>
+            {% if task.completed_at %}
+              <p class="text-muted small mb-1">Completed on {{ task.completed_at|date:"M d, Y" }}</p>
+            {% elif task.due_date %}
+              <p class="text-muted small mb-1">Due: {{ task.due_date|date:"M d, Y" }}</p>
+            {% endif %}
 
-<a href="{% url 'create_task' %}" class="btn btn-success mt-3">Add New Task</a>
+            <div class="mt-auto d-flex gap-2">
+              <form method="post" action="{% url 'toggle_complete' task.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm {% if task.completed %}btn-warning{% else %}btn-success{% endif %}">
+                  {% if task.completed %}<i class="bi bi-arrow-counterclockwise"></i> Undo{% else %}<i class="bi bi-check-lg"></i> Done{% endif %}
+                </button>
+              </form>
+              <a href="{% url 'update_task' task.pk %}" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <a href="{% url 'delete_task' task.pk %}" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="text-center mt-5">
+    <p class="text-muted">You have no tasks yet.</p>
+    <a href="{% url 'create_task' %}" class="btn btn-primary btn-sm">
+      <i class="bi bi-plus-lg"></i> Create Your First Task
+    </a>
+  </div>
+{% endif %}
 {% endblock %}

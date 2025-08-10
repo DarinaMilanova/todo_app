@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'tasks/base.html' %}
+{% block content %}
+<h2>Confirm Account Deletion</h2>
+<p>This action is permanent. Are you sure you want to delete your account?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Yes, delete my account</button>
+  <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
