@@ -1,0 +1,120 @@
+/* === GLOBAL COLORS === */
+:root {
+    --color-bg: #FFF5F2;
+    --color-pink: #F5BABB;
+    --color-main: #129990; /* use #90D1CA if you want softer */
+    --color-main-light: #90D1CA;
+    --color-green: #7ADAA5; /* new green for Done button */
+    --color-green-dark: #064232;
+    --color-yellow: #FFF1CA;
+    --color-white: #ffffff;
+}
+
+/* === BODY === */
+body {
+    background-color: var(--color-bg);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* === NAVBAR === */
+.navbar {
+    background-color: var(--color-main) !important;
+}
+.navbar-brand, .nav-link, .navbar-text {
+    color: var(--color-white) !important;
+}
+.navbar a:hover {
+    color: var(--color-yellow) !important;
+}
+
+/* === BUTTONS === */
+.btn-primary {
+    background-color: var(--color-main) !important;
+    border-color: var(--color-main) !important;
+}
+.btn-primary:hover {
+    background-color: var(--color-green-dark) !important;
+    border-color: var(--color-green-dark) !important;
+}
+
+.btn-success {
+    background-color: var(--color-green) !important;
+    border-color: var(--color-green) !important;
+    color: var(--color-white) !important;
+}
+.btn-success:hover {
+    background-color: var(--color-green-dark) !important;
+    border-color: var(--color-green-dark) !important;
+}
+
+.btn-warning {
+    background-color: var(--color-yellow) !important;
+    color: var(--color-green-dark) !important;
+    border-color: var(--color-yellow) !important;
+}
+.btn-warning:hover {
+    background-color: #ffe89b !important;
+    border-color: #ffe89b !important;
+}
+
+.btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+.btn-danger:hover {
+    background-color: #bb2d3b !important;
+    border-color: #bb2d3b !important;
+}
+
+/* === TASK CARDS === */
+.task-card {
+    border: 2px solid var(--color-main-light);
+    border-radius: 12px;
+    background-color: var(--color-white);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+.task-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* === BADGES === */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.4em 0.6em;
+    border-radius: 8px;
+}
+.badge.bg-warning {
+    background-color: var(--color-yellow) !important;
+    color: var(--color-green-dark) !important;
+}
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+.badge.bg-success {
+    background-color: var(--color-green-dark) !important;
+}
+.badge.bg-info {
+    background-color: var(--color-pink) !important;
+}
+
+/* === FORM INPUTS === */
+input, select, textarea {
+    border-radius: 8px !important;
+    border: 1px solid var(--color-main-light) !important;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--color-green-dark) !important;
+    box-shadow: 0 0 5px rgba(86, 143, 135, 0.5);
+}
+
+/* === FOOTER === */
+footer {
+    background-color: var(--color-main);
+    color: var(--color-white);
+    padding: 1rem;
+    text-align: center;
+}

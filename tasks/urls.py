@@ -22,4 +22,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('toggle-theme/', views.toggle_theme, name='toggle_theme'),
     path('task/<int:pk>/clear-due-date/', views.clear_due_date, name='clear_due_date'),
+    path('categories/', views.manage_categories, name='manage_categories'),
+    path('categories/<int:pk>/delete/', views.delete_category, name='delete_category'),
+    path('categories/<int:pk>/edit/', views.edit_category, name='edit_category'),
 ]
