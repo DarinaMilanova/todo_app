@@ -1,120 +1,121 @@
 /* === GLOBAL COLORS === */
 :root {
-    --color-bg: #FFF5F2;
-    --color-pink: #F5BABB;
-    --color-main: #129990; /* use #90D1CA if you want softer */
-    --color-main-light: #90D1CA;
-    --color-green: #7ADAA5; /* new green for Done button */
-    --color-green-dark: #064232;
-    --color-yellow: #FFF1CA;
+    --color-navbar: #064232;
+    --color-primary: #4A9782;
+    --color-card: #ffffff; /* switched to white for cleaner look */
+    --color-badge: #FDF6E3;
+    --color-body-bg: #FAF9F6;
     --color-white: #ffffff;
 }
 
 /* === BODY === */
 body {
-    background-color: var(--color-bg);
+    background-color: var(--color-body-bg);
     font-family: 'Segoe UI', sans-serif;
 }
 
 /* === NAVBAR === */
 .navbar {
-    background-color: var(--color-main) !important;
+    background-color: var(--color-navbar) !important;
 }
 .navbar-brand, .nav-link, .navbar-text {
     color: var(--color-white) !important;
 }
 .navbar a:hover {
-    color: var(--color-yellow) !important;
+    color: var(--color-primary) !important;
 }
 
 /* === BUTTONS === */
 .btn-primary {
-    background-color: var(--color-main) !important;
-    border-color: var(--color-main) !important;
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
 }
 .btn-primary:hover {
-    background-color: var(--color-green-dark) !important;
-    border-color: var(--color-green-dark) !important;
+    background-color: #3f826e !important;
+    border-color: #3f826e !important;
 }
 
 .btn-success {
-    background-color: var(--color-green) !important;
-    border-color: var(--color-green) !important;
+    background-color: var(--color-navbar) !important;
+    border-color: var(--color-navbar) !important;
     color: var(--color-white) !important;
 }
 .btn-success:hover {
-    background-color: var(--color-green-dark) !important;
-    border-color: var(--color-green-dark) !important;
-}
-
-.btn-warning {
-    background-color: var(--color-yellow) !important;
-    color: var(--color-green-dark) !important;
-    border-color: var(--color-yellow) !important;
-}
-.btn-warning:hover {
-    background-color: #ffe89b !important;
-    border-color: #ffe89b !important;
+    background-color: #002f24 !important;
 }
 
 .btn-danger {
-    background-color: #dc3545 !important;
-    border-color: #dc3545 !important;
+    background-color: #cc4b4b !important;
+    border-color: #cc4b4b !important;
+    color: var(--color-white) !important;
 }
 .btn-danger:hover {
-    background-color: #bb2d3b !important;
-    border-color: #bb2d3b !important;
+    background-color: #b23d3d !important;
 }
 
 /* === TASK CARDS === */
 .task-card {
-    border: 2px solid var(--color-main-light);
+    background-color: var(--color-card);
     border-radius: 12px;
-    background-color: var(--color-white);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     padding: 1rem;
     margin-bottom: 1rem;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border: 1px solid #e6e6e6;
     transition: all 0.2s ease-in-out;
 }
+
 .task-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+/* Title & Description */
+.task-card h5 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.task-card .task-desc {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.75rem;
 }
 
 /* === BADGES === */
 .badge {
-    font-size: 0.85rem;
-    padding: 0.4em 0.6em;
+    font-size: 0.75rem;
+    padding: 0.35em 0.6em;
     border-radius: 8px;
-}
-.badge.bg-warning {
-    background-color: var(--color-yellow) !important;
-    color: var(--color-green-dark) !important;
-}
-.badge.bg-danger {
-    background-color: #dc3545 !important;
-}
-.badge.bg-success {
-    background-color: var(--color-green-dark) !important;
-}
-.badge.bg-info {
-    background-color: var(--color-pink) !important;
+    background-color: var(--color-badge) !important;
+    color: var(--color-navbar) !important;
+    margin-right: 0.25rem;
 }
 
 /* === FORM INPUTS === */
 input, select, textarea {
     border-radius: 8px !important;
-    border: 1px solid var(--color-main-light) !important;
+    border: 1px solid var(--color-primary) !important;
 }
 input:focus, select:focus, textarea:focus {
-    border-color: var(--color-green-dark) !important;
-    box-shadow: 0 0 5px rgba(86, 143, 135, 0.5);
+    border-color: var(--color-navbar) !important;
+    box-shadow: 0 0 5px rgba(0,64,48,0.4);
 }
 
 /* === FOOTER === */
 footer {
-    background-color: var(--color-main);
+    background-color: var(--color-navbar);
     color: var(--color-white);
     padding: 1rem;
     text-align: center;
+}
+
+/* === EMPTY TASK MESSAGE === */
+.empty-message {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #666;
 }

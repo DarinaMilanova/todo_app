@@ -14,46 +14,37 @@ from datetime import timedelta, datetime
 def task_list(request):
     today = timezone.now().date()
     today_plus_2 = today + timedelta(days=2)
+
+    # Get all tasks for this user
     tasks = Task.objects.filter(user=request.user)
 
-    # Category filter
+    # --- Search filter ---
+    query = request.GET.get('q', '').strip()
+    if query:
+        tasks = tasks.filter(title__icontains=query)
+
+    # --- Category filter ---
     category_id = request.GET.get('category')
     if category_id:
         tasks = tasks.filter(category_id=category_id)
 
-    # Status filter
+    # --- Status filter ---
     status = request.GET.get('status')
     if status == 'completed':
         tasks = tasks.filter(completed=True)
-    elif status == 'incomplete':
+    elif status == 'pending':
         tasks = tasks.filter(completed=False)
-    elif status == 'overdue':
-        tasks = tasks.filter(due_date__lt=today, completed=False)
-    elif status == 'upcoming':
-        tasks = tasks.filter(due_date__gte=today, completed=False)
 
-    # Search
-    query = request.GET.get('q')
-    if query:
-        tasks = tasks.filter(title__icontains=query)
-
-    # Sorting
-    sort = request.GET.get('sort')
-    sort_map = {
-        'created_asc': 'created_at',
-        'created_desc': '-created_at',
-        'due_asc': 'due_date',
-        'due_desc': '-due_date'
-    }
-    if sort:
-        tasks = tasks.order_by(sort_map.get(sort, 'created_at'))
+    # Get user's categories for the dropdown
+    categories = Category.objects.filter(user=request.user)
 
     return render(request, 'tasks/task_list.html', {
         'tasks': tasks,
         'today': today,
-        'today_plus_2': today_plus_2
+        'today_plus_2': today_plus_2,
+        'categories': categories,
+        'request': request  # so the template can access current GET params
     })
-
 
 @login_required
 def create_task(request):

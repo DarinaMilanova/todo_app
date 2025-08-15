@@ -5,29 +5,25 @@
 <div class="container mt-4">
     <h1 class="mb-4">Your Tasks</h1>
 
-    <!-- Search and Create -->
+    <!-- Search + Category Filter + Add Task -->
     <div class="d-flex flex-wrap mb-3 gap-2">
-        <form method="GET" action="" class="d-flex flex-grow-1">
-            <input type="text" name="q" class="form-control me-2" placeholder="Search..." value="{{ request.GET.q }}">
+        <form method="GET" action="" class="d-flex flex-grow-1 gap-2">
+            <input type="text" name="q" class="form-control" placeholder="Search..." value="{{ request.GET.q }}">
+            <select name="category" class="form-select">
+                <option value="">All Categories</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
+                        {{ cat.name }}
+                    </option>
+                {% endfor %}
+            </select>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
         <a href="{% url 'create_task' %}" class="btn btn-primary">+ Add Task</a>
     </div>
 
-    <!-- Category Filter -->
-    <form method="GET" class="mb-4 d-flex gap-2">
-        <select name="category" class="form-select">
-            <option value="">All Categories</option>
-            {% for cat in categories %}
-                <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
-                    {{ cat.name }}
-                </option>
-            {% endfor %}
-        </select>
-        <button type="submit" class="btn btn-primary">Filter</button>
-    </form>
-
     <!-- Tasks Grid -->
+    {% if tasks %}
     <div class="row g-3">
         {% for task in tasks %}
             <div class="col-md-4">
@@ -35,23 +31,32 @@
                     {% if task.completed %}border-success
                     {% elif task.due_date and task.due_date < today %}border-danger
                     {% elif task.due_date and task.due_date <= today_plus_2 %}border-warning
-                    {% else %}border-secondary{% endif %}
+                    {% endif %}
                 ">
+                    <!-- Title -->
                     <h5>{{ task.title }}</h5>
 
-                    {% if task.category %}
-                        <span class="badge bg-info">{{ task.category.name }}</span>
+                    <!-- Description -->
+                    {% if task.description %}
+                        <p class="task-desc">{{ task.description|truncatechars:120 }}</p>
                     {% endif %}
 
-                    {% if task.completed %}
-                        <span class="badge bg-success">Completed</span>
-                    {% elif task.due_date and task.due_date < today %}
-                        <span class="badge bg-danger">Overdue</span>
-                    {% elif task.due_date and task.due_date <= today_plus_2 %}
-                        <span class="badge bg-warning">Due Soon</span>
-                    {% endif %}
+                    <!-- Badges -->
+                    <div class="mb-2">
+                        {% if task.category %}
+                            <span class="badge">{{ task.category.name }}</span>
+                        {% endif %}
+                        {% if task.completed %}
+                            <span class="badge">Completed</span>
+                        {% elif task.due_date and task.due_date < today %}
+                            <span class="badge">Overdue</span>
+                        {% elif task.due_date and task.due_date <= today_plus_2 %}
+                            <span class="badge">Due Soon</span>
+                        {% endif %}
+                    </div>
 
-                    <p class="text-muted mt-2">
+                    <!-- Due Date -->
+                    <p class="text-muted mb-3">
                         {% if task.completed %}
                             Completed on {{ task.completed_at|date:"M d, Y" }}
                         {% elif task.due_date %}
@@ -60,7 +65,7 @@
                     </p>
 
                     <!-- Buttons -->
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 mt-auto">
                         {% if task.completed %}
                             <a href="{% url 'toggle_complete' task.id %}" class="btn btn-warning btn-sm">⟳ Undo</a>
                         {% else %}
@@ -71,9 +76,13 @@
                     </div>
                 </div>
             </div>
-        {% empty %}
-            <p>No tasks found.</p>
         {% endfor %}
     </div>
+    {% else %}
+        <div class="empty-message">
+            <p>No tasks yet. 🌱 Create your first task and start getting things done!</p>
+            <a href="{% url 'create_task' %}" class="btn btn-primary mt-3">+ Create Task</a>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
